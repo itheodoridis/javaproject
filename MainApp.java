@@ -22,8 +22,8 @@ public class MainApp {
         Product_Type keyboards = new Product_Type(2, "Keyboards", peripherals);
         Product_Type mice = new Product_Type(3, "Mice", peripherals);
         Product_Type printers = new Product_Type(4, "Printers", peripherals);
-        Type_List.add(screens);
         
+
     }
 
     public static void MainMenu(){
