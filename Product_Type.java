@@ -1,13 +1,9 @@
 
 public class Product_Type {
-    //private String Motherboards;
-    //private String MemoryRAM;
-    //private String CPUs;
-    //private String Hard_Discs;
-    //private String Graphics;
-    //five-argument constructor
-    protected String name;
-    protected int index;
+
+    protected String Name;
+    protected int Index;
+    protected String[] Products;
     public Product_Type(int index, String name){
         Index = index;
         Name = name;
@@ -16,10 +12,13 @@ public class Product_Type {
     public int getIndex(){
         return Index;
     }
+
+    public String getName(){
+        return Name;
+    }
     
-    // ίσως πρέπει να αλλάξει και να γίνει abstract
     public String toString() {
-        return String.format( "Computer Parts include the following products:\n%s\n%s\n%s\n%s\n%s",
-        getMotherboards(), getMemoryRAM(), getCPUs(), getHard_Discs(), getGraphics() );
-        } // end method toString
+        return String.format( "Index:%s Name:%s ",
+        getIndex(), getName() );
+    }
 }

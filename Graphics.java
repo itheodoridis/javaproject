@@ -1,11 +1,11 @@
 public class Graphics extends Product{
     private String Chipset;
     private int Memory;
-    private int Stock;
-    //two-argument constructor 
-    public Graphics(String name , int year , String company ,
-    float price,String chipset , int memory, int stock){
-        super(name, year, company, price);
+
+    public Graphics(int index, String name , int year , String company ,
+    float price,String chipset , int memory, int stock, 
+    Product_Category product_category, Product_Type product_type){
+        super(index,name, year, company, price, stock, product_category, product_type);
         Chipset = chipset;
         Memory = memory;
         Stock = stock; 
@@ -20,14 +20,10 @@ public class Graphics extends Product{
     public int getMemory(){
         return Memory;
     }
-    public void setStock(int stock){
-        Stock = stock;}
-    public int getStock(){
-        return Stock;
-    }
     
-    public void print_information(){
-        System.out.println("Characteristics: Chipset:"+ Chipset + "Memory:" + Memory);
+    public String toString(){
+        String message = super.toString();
+        message += "\nCharacteristics: Chipset:"+ getChipset() + "Memory:" + getMemory();
+        return message;
     }
-      
 }

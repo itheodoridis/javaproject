@@ -2,11 +2,11 @@ public class Motherboards extends Product{
     private String Processor_type;
     private int Memory;
     private int Gates;
-    private int Stock;
-    //three-argument constructor 
-    public Motherboards(String name , int year , String company ,
-    float price, String processor_type , int memory , int gates, int stock){
-        super(name,year,company,price);
+    
+    public Motherboards(int index, String name , int year , String company ,
+    float price, String processor_type , int memory , int gates, int stock, 
+    Product_Category product_category, Product_Type product_type){
+        super(index,name,year,company,price,stock,product_category,product_type);
         Processor_type = processor_type;
         Memory = memory;
         Gates = gates;
@@ -27,15 +27,11 @@ public class Motherboards extends Product{
     public int getGates(){
         return Gates;
     }
-    public void setStock(int stock){
-        Stock = stock;}
-    public int getStock(){
-        return Stock;
-    }
     
-    public void print_information(){
-        System.out.println("Characteristics: Processor_type:"+ Processor_type + "Memory:" + Memory
-        +  "Number of gates:" + Gates);
+    public String toString(){
+        String message = super.toString();
+        message += "\nCharacteristics: Processor_type: "+ getProcessor_type() + " Memory: " + getMemory()
+        +  " Number of gates: " + getGates();
+        return message;
     }
-      
 }

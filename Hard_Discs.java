@@ -2,15 +2,14 @@ public class Hard_Discs extends Product{
     private String Type;
     private float Size;
     private int Capacity;
-    private int Stock;
-    //three-argument constructor 
-    public Hard_Discs(String name , int year , String company ,
-    float price,String type , float size , int capacity, int stock){
-        super(name, year, company, price);
-        Type = type;
-        Size = size;
-        Capacity = capacity;
-        Stock = stock;
+
+    public Hard_Discs(int index, String name , int year , String company ,
+    float price,String type , float size , int capacity, int stock, 
+    Product_Category product_category, Product_Type product_type){
+        super(index, name, year, company, price, stock, product_category, product_type);
+        setType(type);
+        setSize(size);
+        setCapacity(capacity);
     } 
     public void setType(String type){
         Type = type;}
@@ -27,14 +26,10 @@ public class Hard_Discs extends Product{
     public int getCapacity(){
         return Capacity;
     }
-    public void setStock(int stock){
-        Stock = stock;}
-    public int getStock(){
-        return Stock;
-    }
-    
-    public void print_information(){
-        System.out.println("Characteristics: Type:"+ Type + "Size:" + Size
-        +  "Capacity:" + Capacity);
+    public String toString(){
+        String message = super.toString();
+        message += "\nCharacteristics: Type:"+ getType() + "Size:" + getSize()
+        +  "Capacity:" + getCapacity();
+        return message;
     }
 }
