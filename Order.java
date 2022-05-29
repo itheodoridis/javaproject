@@ -8,7 +8,7 @@ public class Order {
     private float Total_cost;
     private String Situation;
     
-
+    //h posotita ths paraggelias den exei probleftei apo tin ekfonisi
     public Order(int order_code, Product ordered_product, String customer_name, 
     String customer_phone_number, String order_date, String arrival_date,String situation){
         setOrder_code(order_code);
@@ -90,7 +90,7 @@ public class Order {
 
     public String toString(){
         String message;
-        message = "Order Code: "+ getOrder_code();
+        message = "\nOrder Code: "+ getOrder_code();
         message += "\nProduct: "+ getProduct().getName();
         message += "\nCustomer Name: " + getCustomer_name();
         message += "\nCustomer Phone: " + getCustomer_phone_number();

@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;  
+import java.util.Date;
+import java.time.format.DateTimeFormatter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;  
 
 public class MainApp {
     //public static boolean Done = false;
@@ -70,7 +73,7 @@ public class MainApp {
         return;
     }
 
-    public static boolean MainMenu(){
+    public static boolean MainMenu() throws ParseException{
         boolean check = false;
         int answer;
         do{
@@ -88,7 +91,7 @@ public class MainApp {
             else{
                 if (answer == 0){
                     Select_Category_Menu();
-                    System.out.println("Returning from Category menu");
+                    //System.out.println("Returning from Category menu");
                 }
                 else if (answer == 1){
                     int num_Orders = Order_List.size();
@@ -109,7 +112,7 @@ public class MainApp {
         return check;
     }
 
-    public static boolean Select_Category_Menu(){
+    public static boolean Select_Category_Menu() throws ParseException{
         int answer;
         boolean check = false;
         do{
@@ -125,7 +128,7 @@ public class MainApp {
             else if(answer != 3){
                 category_choice = Category_List.get(answer-1);
                 check = Select_Product_Type_Menu(category_choice);
-                System.out.println("Returning from Product Type menu");
+                //System.out.println("Returning from Product Type menu");
             }
             else{
                 return false;
@@ -134,7 +137,7 @@ public class MainApp {
         return true;
     }
 
-    public static boolean Select_Product_Type_Menu(Product_Category category_choice){
+    public static boolean Select_Product_Type_Menu(Product_Category category_choice) throws ParseException{
         int answer;
         List<Product_Type> Type_List_current;
         Product_Type item;
@@ -160,7 +163,7 @@ public class MainApp {
             else if (answer != 0){
                 type_choice = Type_List_current.get(answer-1);
                 check = Select_Product_Menu(category_choice,type_choice);
-                System.out.println("Returning from Product menu");
+                //System.out.println("Returning from Product menu");
             }
             else{
                 return false;
@@ -169,7 +172,7 @@ public class MainApp {
         return true;
     }
 
-    public static boolean Select_Product_Menu(Product_Category category_choice, Product_Type type_choice){
+    public static boolean Select_Product_Menu(Product_Category category_choice, Product_Type type_choice) throws ParseException{
         int answer;
         //boolean check = false;
         List<Product> Product_List = new ArrayList<Product>();
@@ -239,32 +242,41 @@ public class MainApp {
                         String customer_name = inString.nextLine();
                         System.out.println("Enter Customer Phone number:");
                         String customer_phone_number = inString.nextLine();
-                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yy");
-                        LocalDate localDate = LocalDate.now();
-                        String order_date = dtf.format(localDate);
+                        SimpleDateFormat date_format = new SimpleDateFormat("dd/MM/yy");
+                        Date localDate = new Date();
+                        String order_date = date_format.format(localDate);
                         String arrival_date;
+                        Date get_arrival_date;
                         do{
-                            System.out.println("Enter Order Arrival Date:");
+                            System.out.println("Enter Order Arrival Date (dd/MM/yy):");
                             inString = new Scanner (System.in);
                             arrival_date = inString.nextLine();
-                            if (arrival_date.compareTo(order_date)<0){
-                                System.out.println("Give a valid arrival date same or after " + order_date);
+                            try{
+                                get_arrival_date = date_format.parse(arrival_date);
+                                if (get_arrival_date.before(localDate)){
+                                    System.out.println("Give a valid arrival date same or after " + order_date);
+                                }
                             }
-                        }while (arrival_date.compareTo(order_date)<0);
+                            catch (ParseException e1) {
+                                System.out.println("Got parse exception,"+ e1 +", setting arrival date to " + order_date);
+                                get_arrival_date = localDate;
+                            }
+
+                        }while (get_arrival_date.before(localDate));
                         String situation = "Expected";
                         Order order_item = new Order(order_code, item, customer_name, customer_phone_number, order_date, arrival_date, situation);
                         Order_List.addAll(Arrays.asList(order_item));
 
                     }
                 }
-                System.out.println("Done with this product");
+                //System.out.println("Done with this product");
             }
             else{
 
                 return false;
             }
         }while((answer < 0) || (answer > Product_List.size()));
-        System.out.println("Returning To Product_Type Menu");
+        //System.out.println("Returning To Product_Type Menu");
         return true;
     }
 
@@ -280,7 +292,7 @@ public class MainApp {
         }
         boolean found = false;
         do{
-            System.out.println("Please choose an order code: 1 - " + Order_List.size() + " or 0 to go to the main menu:");
+            System.out.println("\nPlease choose an order code: 1 - " + Order_List.size() + " or 0 to go to the main menu:");
             order_code = in.nextInt();
             if (order_code == 0){
                 return false;
@@ -290,6 +302,11 @@ public class MainApp {
                 if (order_item.getOrder_code() == order_code){
                     found=true;
                     order_code = order_item.getOrder_code();
+                    System.out.println(order_item);
+                    if (order_item.getSituation() == "Executed") {
+                        System.out.println("\n Can't do it! Order is already executed");
+                        return false;
+                    }
                     System.out.println("Do you want to set the order as arrived and sold?");
                     do{
                         System.out.println("1. yes \n2. no");
@@ -314,6 +331,7 @@ public class MainApp {
                         Sell sell_item = new Sell(sell_code, order_item.getProduct(), order_item.getCustomer_name(), 
                         order_item.getCustomer_phone_number(), sell_date);
                         Sell_List.addAll(Arrays.asList(sell_item));
+                        //Order_List.remove(order_item);
                     }
                 }
             }
@@ -336,7 +354,7 @@ public class MainApp {
         return;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
         Create_Shop();  
         boolean done = false;
         while (!done){
