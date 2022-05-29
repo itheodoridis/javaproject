@@ -1,15 +1,17 @@
 public abstract class Product {
-    private String Name;
-    private int Year;
-    private String Company;
-    private float Price;
+    protected String Name;
+    protected int Year;
+    protected String Company;
+    protected float Price;
+    protected int Index;
     //four-argument constructor
-    public Product(String name , int year , String company ,
+    public Product(int index, String name, int year , String company,
      float price){
-     Name = name;
-     Year= year;
-     Company= company;
-     Price = price;
+        Index = index;
+        Name = name;
+        Year= year;
+        Company= company;
+        Price = price;
     } 
     public void setName( String name ) {
         Name = name; }
@@ -31,8 +33,10 @@ public abstract class Product {
     public float getPrice() {
         return Price; }
     
+    public int getIndex(){
+        return Index;
+    }
     
-      
     public String toString() {
         return String.format( "%s %s %s %s euros",
         getName(), getYear(), getCompany(), getPrice() );
