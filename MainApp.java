@@ -22,7 +22,46 @@ public class MainApp {
         Product_Type keyboards = new Product_Type(2, "Keyboards", peripherals);
         Product_Type mice = new Product_Type(3, "Mice", peripherals);
         Product_Type printers = new Product_Type(4, "Printers", peripherals);
-        
+        Type_List.add(motherboards);
+        Type_List.add(cpus);
+        Type_List.add(memoryram);
+        Type_List.add(graphics);
+        Type_List.add(hard_disks);
+        Type_List.add(screens);
+        Type_List.add(keyboards);
+        Type_List.add(mice);
+        Type_List.add(printers);
+
+        Motherboards a1 = new Motherboards(1,"B450-A Pro Max", 2018, "MSI", 80f, 
+        "AMD", 32, 6 ,28, motherboards);
+        Motherboards a10 = new Motherboards(2,"B450-F", 2020, "Asus", 130f, 
+        "Intel", 64, 6, 36, motherboards );
+        CPUs a2 = new CPUs(1,"i5-11400F", 2019, "intel CORE", 150f, 2.6f , 6, true,12, cpus);
+        CPUs a11 = new CPUs(2,"Ryzen 5 5600G", 2021, "AMD", 165f, 3.3f , 8, true,18, cpus);
+        MemoryRAM a12 = new MemoryRAM(1,"Z Neo", 2018, "G.Skill Trident", 116f, "DDR5", 16, 3600,26,memoryram);
+        MemoryRAM a3 = new MemoryRAM(2,"CCT16G4SFR", 2020, "Crucial", 50f, "DDR4", 8, 3200,18,memoryram);
+        Graphics a4 = new Graphics(1,"RADEON RX 6600", 2021, "SAPPHIRE", 400f, "AMD", 8,0,graphics);
+        Graphics a13 = new Graphics(2,"GTX 1650", 2021, "MSI", 270f, "nVidia", 8, 9,graphics);
+        Hard_Disks a5 = new Hard_Disks(1,"WD Purple", 2020, "Western Digital", 45f, "SSD", 2.5f, 256, 1, hard_disks);
+        Hard_Disks a14 = new Hard_Disks(2,"970 Evo plus", 2020, "Samsung", 50f, "HDD", 1.8f, 512, 4, hard_disks);
+        Screens a6 = new Screens(1,"DELL ADAMO XPS 13 4", 2021, "DELL", 50f, 
+        "Monitor", "1200 X 800" , 1.6f , "HDMI", 8, screens);
+        Screens a15 = new Screens(2,"Huawei", 2018, "Huawei Matebook D15", 80f, 
+        "TV Monitor", "800 X 1200" , 2.8f , "Display Port",0, screens);
+        Keyboards a7 = new Keyboards(1,"MK295", 2020, "Logictech", 32f, "wireless",0, keyboards);
+        Keyboards a16 = new Keyboards(2,"DELL KB216", 2021, "DELL", 60f, "wireD",37, keyboards);
+        Mice a8 = new Mice(1,"Xiaomi Mi Dual Mode", 2021, "Xiaomi", 10f, "laser", "wireless", 15,mice);
+        Mice a17 = new Mice(2,"Razer Vipor mini RGB", 2019, "Razer", 30f, "laser", "wired",31, mice);
+        Printers a9 = new Printers(1,"HP DeskJet 2721e", 2022, "HP", 60f, "laser", "colour",26, printers);
+        Printers a18 = new Printers(2,"Xerox B230V/DNI", 2022, "Xerox", 100f, "laser", "black&white",0, printers);
+
+
+
+
+        return;
+    }
+
+    public static void Create_Stock(){
 
     }
 
@@ -56,24 +95,7 @@ public class MainApp {
         
         
 
-        Motherboards a1 = new Motherboards("B450-A Pro Max", 2018, "MSI", 80f, "AMD", 32, 6 ,28);
-        Motherboards a10 = new Motherboards("B450-F", 2020, "Asus", 130f, "Intel", 64, 6, 36 );
-        CPUs a2 = new CPUs("i5-11400F", 2019, "intel CORE", 150f, 2.6f , 6, true,12 );
-        CPUs a11 = new CPUs("Ryzen 5 5600G", 2021, "AMD", 165f, 3.3f , 8, true,18 );
-        MemoryRAM a12 = new MemoryRAM("Z Neo", 2018, "G.Skill Trident", 116f, "DDR5", 16, 3600,26);
-        MemoryRAM a3 = new MemoryRAM("CCT16G4SFR", 2020, "Crucial", 50f, "DDR4", 8, 3200,18);
-        Graphics a4 = new Graphics("RADEON RX 6600", 2021, "SAPPHIRE", 400f, "AMD", 8,0);
-        Graphics a13 = new Graphics("GTX 1650", 2021, "MSI", 270f, "nVidia", 8, 9);
-        Hard_Discs a5 = new Hard_Discs("WD Purple", 2020, "Western Digital", 45f, "SSD", 2.5f, 256, 1);
-        Hard_Discs a14 = new Hard_Discs("970 Evo plus", 2020, "Samsung", 50f, "HDD", 1.8f, 512, 4);
-        Screens a6 = new Screens("DELL ADAMO XPS 13 4", 2021, "DELL", 50f, "Monitor", "1200 X 800" , 1.6f , "HDMI", 8);
-        Screens a15 = new Screens("Huawei", 2018, "Huawei Matebook D15", 80f, "TV Monitor", "800 X 1200" , 2.8f , "Display Port",0);
-        Keyboards a7 = new Keyboards("MK295", 2020, "Logictech", 32f, "wireless",0);
-        Keyboards a16 = new Keyboards("DELL KB216", 2021, "DELL", 60f, "wireD",37);
-        Mouses a8 = new Mouses("Xiaomi Mi Dual Mode", 2021, "Xiaomi", 10f, "laser", "wireless", 15);
-        Mouses a17 = new Mouses("Razer Vipor mini RGB", 2019, "Razer", 30f, "laser", "wired",31);
-        Printers a9 = new Printers("HP DeskJet 2721e", 2022, "HP", 60f, "laser", "colour",26);
-        Printers a18 = new Printers("Xerox B230V/DNI", 2022, "Xerox", 100f, "laser", "black&white",0);
+
         
         Done = false;
         while (Done == false) {

@@ -1,8 +1,8 @@
-public class mice extends Product {
+public class Mice extends Product {
     private String Technology;
     private String Connection;
    
-    public mice(int index, String name , int year , String company ,
+    public Mice(int index, String name , int year , String company ,
     float price,String technology, String connection, int stock, Product_Type product_type){
         super(index, name, year, company, price, stock, product_type);
         Technology = technology;
