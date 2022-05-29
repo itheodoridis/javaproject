@@ -1,17 +1,21 @@
 import java.util.Scanner;
 import java.util.jar.Attributes.Name;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 public class MainApp {
     public static boolean Done;
     public static List<Product_Category> Category_List;
     public static List<Product_Type> Type_List;
     public static List<Product> Stock_List;
+    public static List<Order> Order_List;
+    public static List<Sell> Sell_List;
 
-    public static void Create_Structure(){
+    public static void Create_Shop(){
         Product_Category parts = new Product_Category(1, "Computer Parts");
         Product_Category peripherals = new Product_Category(2, "Peripherals");
-        Category_List.add(parts);
-        Category_List.add(peripherals);
+        Category_List = new ArrayList<Product_Category>();
+        Category_List.addAll(Arrays.asList(parts,peripherals));
 
         Product_Type motherboards = new Product_Type(1, "Motherboards", parts);
         Product_Type cpus = new Product_Type(2, "CPUs", parts);
@@ -22,15 +26,10 @@ public class MainApp {
         Product_Type keyboards = new Product_Type(2, "Keyboards", peripherals);
         Product_Type mice = new Product_Type(3, "Mice", peripherals);
         Product_Type printers = new Product_Type(4, "Printers", peripherals);
-        Type_List.add(motherboards);
-        Type_List.add(cpus);
-        Type_List.add(memoryram);
-        Type_List.add(graphics);
-        Type_List.add(hard_disks);
-        Type_List.add(screens);
-        Type_List.add(keyboards);
-        Type_List.add(mice);
-        Type_List.add(printers);
+        Type_List = new ArrayList<>();
+
+        Type_List.addAll(Arrays.asList(motherboards,cpus,memoryram,graphics,hard_disks,
+        screens,keyboards,mice,printers));
 
         Motherboards a1 = new Motherboards(1,"B450-A Pro Max", 2018, "MSI", 80f, 
         "AMD", 32, 6 ,28, motherboards);
@@ -54,15 +53,14 @@ public class MainApp {
         Mice a17 = new Mice(2,"Razer Vipor mini RGB", 2019, "Razer", 30f, "laser", "wired",31, mice);
         Printers a9 = new Printers(1,"HP DeskJet 2721e", 2022, "HP", 60f, "laser", "colour",26, printers);
         Printers a18 = new Printers(2,"Xerox B230V/DNI", 2022, "Xerox", 100f, "laser", "black&white",0, printers);
+        
+        Stock_List = new ArrayList<>();
+        Stock_List.addAll(Arrays.asList(a1,a10,a2,a11,a12,a3,a4,a13,a5,a14,a6,a15,a7,a16,a8,a17,a9,a18));
 
-
-
-
+        Order_List = new ArrayList<>();
+        Sell_List = new ArrayList<>();
+        
         return;
-    }
-
-    public static void Create_Stock(){
-
     }
 
     public static void MainMenu(){
@@ -83,35 +81,33 @@ public class MainApp {
             return;
         }
         else {
-
+            Product_Menu();
         }
     }
 
+    public static void Product_Menu(){
+        Scanner in = new Scanner (System.in);
+        int answer;
+        do{
+            System.out.println("Choose Product Category:");
+            System.out.println("1. Computer parts");
+            System.out.println("2. Peripheral products");
+
+            answer = in.nextInt();
+        }
+    }
 
 
     public static void main(String[] args) {
         boolean done=false;
         //int answer;
         
-        
-
-
-        
+        Create_Shop();
+                
         Done = false;
         while (Done == false) {
             MainMenu();
-            answer=7;
-            while (answer < 0) and (answer!="2") and (answer!="3") and (answer!="0") or (answer=="7"){
-                System.out.println("0. Overview of products");
-                System.out.println("1. Overview of orders");
-                System.out.println("2. Overview of sales");
-                System.out.println("3. Exit");
-                answer = in.nextInt();
-                if (answer!="1") && (answer!="2") && (answer!="3") && (answer!="0"){
-                    System.out.println("Give a valid number!! Valid numbers are : 0, 1, 2, 3");
-                }
-            }
-            
+
             if (answer.equals ("0")){
                 answer="0";
                 while (answer!="c1" and answer!="c2") or (answer=="0") {
