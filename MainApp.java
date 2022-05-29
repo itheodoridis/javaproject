@@ -1,27 +1,59 @@
 import java.util.Scanner;
 import java.util.jar.Attributes.Name;
+import java.util.List;
 public class MainApp {
-    boolean Done;
+    public static boolean Done;
+    public static List<Product_Category> Category_List;
+    public static List<Product_Type> Type_List;
+    public static List<Product> Stock_List;
 
-    public int MainMenu(){
+    public static void Create_Structure(){
+        Product_Category parts = new Product_Category(1, "Computer Parts");
+        Product_Category peripherals = new Product_Category(2, "Peripherals");
+        Category_List.add(parts);
+        Category_List.add(peripherals);
+
+        Product_Type motherboards = new Product_Type(1, "Motherboards", parts);
+        Product_Type cpus = new Product_Type(2, "CPUs", parts);
+        Product_Type memoryram = new Product_Type(3, "MemoryRAM", parts);
+        Product_Type graphics = new Product_Type(4, "Graphics", parts);
+        Product_Type hard_disks = new Product_Type(5, "Hard Disks", parts);
+        Product_Type screens = new Product_Type(1, "Motherboards", peripherals);
+        Product_Type keyboards = new Product_Type(2, "Keyboards", peripherals);
+        Product_Type mice = new Product_Type(3, "Mice", peripherals);
+        Product_Type printers = new Product_Type(4, "Printers", peripherals);
+        Type_List.add(screens);
+        
+    }
+
+    public static void MainMenu(){
         Scanner in = new Scanner (System.in);
-        int answer=7;
-        while (((answer <= 0) && (answer>=3)) || answer==7){
+        int answer;
+        do{
             System.out.println("0. Overview of products");
             System.out.println("1. Overview of orders");
             System.out.println("2. Overview of sales");
             System.out.println("3. Exit");
             answer = in.nextInt();
-            if ((answer <= 0) && (answer>=3){
+            if ((answer <= 0) && (answer>=3)){
                 System.out.println("Give a valid number!! Valid numbers are : 0, 1, 2, 3");
-            })
+            }
+        }while ((answer <= 0) && (answer>=3));
+        if (answer == 3){
+            Done = true;
+            return;
+        }
+        else {
+
         }
     }
+
+
+
     public static void main(String[] args) {
         boolean done=false;
+        //int answer;
         
-        int answer;
-
         
 
         Motherboards a1 = new Motherboards("B450-A Pro Max", 2018, "MSI", 80f, "AMD", 32, 6 ,28);
@@ -45,6 +77,7 @@ public class MainApp {
         
         Done = false;
         while (Done == false) {
+            MainMenu();
             answer=7;
             while (answer < 0) and (answer!="2") and (answer!="3") and (answer!="0") or (answer=="7"){
                 System.out.println("0. Overview of products");

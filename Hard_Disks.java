@@ -1,9 +1,9 @@
-public class Hard_Discs extends Product{
+public class Hard_Disks extends Product{
     private String Type;
     private float Size;
     private int Capacity;
 
-    public Hard_Discs(int index, String name , int year , String company ,
+    public Hard_Disks(int index, String name , int year , String company ,
     float price,String type , float size , int capacity, int stock, Product_Type product_type){
         super(index, name, year, company, price, stock, product_type);
         setType(type);
