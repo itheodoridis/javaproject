@@ -27,8 +27,8 @@ public class Hard_Disks extends Product{
     }
     public String toString(){
         String message = super.toString();
-        message += "\nCharacteristics: Type:"+ getType() + "Size:" + getSize()
-        +  "Capacity:" + getCapacity();
+        message += "\nCharacteristics: Type: "+ getType() + "\nSize: " + getSize()
+        +  "\nCapacity: " + getCapacity();
         return message;
     }
 }

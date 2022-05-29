@@ -1,16 +1,23 @@
 import java.util.Scanner;
-import java.util.jar.Attributes.Name;
+//import java.util.jar.Attributes.Name;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;  
+
 public class MainApp {
-    public static boolean Done;
+    //public static boolean Done = false;
     public static List<Product_Category> Category_List;
-    public static List<Product_Type> Type_List;
+    public static List<Product_Type> Type_List_Parts, Type_List_Peripherals;
     public static List<Product> Stock_List;
     public static List<Order> Order_List;
     public static List<Sell> Sell_List;
-
+    public static Product_Category category_choice;
+    public static Product_Type type_choice;
+    public static Scanner in = new Scanner (System.in);
+    public static Scanner inString = new Scanner (System.in);
+    
     public static void Create_Shop(){
         Product_Category parts = new Product_Category(1, "Computer Parts");
         Product_Category peripherals = new Product_Category(2, "Peripherals");
@@ -26,10 +33,10 @@ public class MainApp {
         Product_Type keyboards = new Product_Type(2, "Keyboards", peripherals);
         Product_Type mice = new Product_Type(3, "Mice", peripherals);
         Product_Type printers = new Product_Type(4, "Printers", peripherals);
-        Type_List = new ArrayList<>();
-
-        Type_List.addAll(Arrays.asList(motherboards,cpus,memoryram,graphics,hard_disks,
-        screens,keyboards,mice,printers));
+        Type_List_Parts = new ArrayList<>();
+        Type_List_Parts.addAll(Arrays.asList(motherboards,cpus,memoryram,graphics,hard_disks));
+        Type_List_Peripherals = new ArrayList<>();
+        Type_List_Peripherals.addAll(Arrays.asList(screens,keyboards,mice,printers));
 
         Motherboards a1 = new Motherboards(1,"B450-A Pro Max", 2018, "MSI", 80f, 
         "AMD", 32, 6 ,28, motherboards);
@@ -63,303 +70,281 @@ public class MainApp {
         return;
     }
 
-    public static void MainMenu(){
-        Scanner in = new Scanner (System.in);
+    public static boolean MainMenu(){
+        boolean check = false;
         int answer;
         do{
+            System.out.println("\nChoose wisely:");
             System.out.println("0. Overview of products");
             System.out.println("1. Overview of orders");
             System.out.println("2. Overview of sales");
             System.out.println("3. Exit");
+            in = new Scanner(System.in);
             answer = in.nextInt();
-            if ((answer <= 0) && (answer>=3)){
-                System.out.println("Give a valid number!! Valid numbers are : 0, 1, 2, 3");
+            System.out.println("Got option:" + answer);
+            if ((answer < 0) || (answer>3)){
+                System.out.println("Give a valid number!! Valid numbers are : 0 - 3");
             }
-        }while ((answer <= 0) && (answer>=3));
-        if (answer == 3){
-            Done = true;
-            return;
-        }
-        else {
-            Product_Menu();
-        }
+            else{
+                if (answer == 0){
+                    Select_Category_Menu();
+                    System.out.println("Returning from Category menu");
+                }
+                else if (answer == 1){
+                    int num_Orders = Order_List.size();
+                    if (num_Orders > 0) Print_Orders();
+                    else System.out.println("No Orders to print");
+                }
+                else if (answer == 2){
+                    int num_Sales = Sell_List.size();
+                    if (num_Sales > 0) Print_Sales();
+                    else System.out.println("No Sales to print");
+                }
+                else{
+                    check = true;
+                }
+            }
+        }while ((answer < 0) || (answer > 3) || (check == false));
+        System.out.println("Out of Main Menu");
+        return check;
     }
 
-    public static void Product_Menu(){
-        Scanner in = new Scanner (System.in);
+    public static boolean Select_Category_Menu(){
         int answer;
+        boolean check = false;
         do{
             System.out.println("Choose Product Category:");
             System.out.println("1. Computer parts");
             System.out.println("2. Peripheral products");
+            System.out.println("3. Return to previous menu");
 
             answer = in.nextInt();
-        }
+            if ((answer < 1) || (answer > 3)){
+                System.out.println("Give a valid option!! Valid options are : 1-3");
+            }
+            else if(answer != 3){
+                category_choice = Category_List.get(answer-1);
+                check = Select_Product_Type_Menu(category_choice);
+                System.out.println("Returning from Product Type menu");
+            }
+            else{
+                return false;
+            }
+        } while ((answer < 1) || (answer>3) || (check == false));
+        return true;
     }
 
+    public static boolean Select_Product_Type_Menu(Product_Category category_choice){
+        int answer;
+        List<Product_Type> Type_List_current;
+        Product_Type item;
+        if (category_choice.getName() == "Computer Parts"){
+            Type_List_current = Type_List_Parts;
+        }
+        else{
+            Type_List_current = Type_List_Peripherals;
+        }
+        boolean check = false;
+        do{
+            System.out.println("Choose Product Type: 1 - " + Type_List_current.size() + " or 0");
+            for (int i=0;i<Type_List_current.size();i++){
+                item = Type_List_current.get(i);
+                System.out.println(item.getIndex() + ". " + item.getName() + " :");
+            }
+            System.out.println("0. Return to previous menu");
 
-    public static void main(String[] args) {
-        boolean done=false;
-        //int answer;
-        
-        Create_Shop();
-                
-        Done = false;
-        while (Done == false) {
-            MainMenu();
+            answer = in.nextInt();
+            if ((answer < 0) || (answer >= Type_List_current.size())){
+                System.out.println("Give a valid type 1 - " + Type_List_current.size() + " or 0");
+            }
+            else if (answer != 0){
+                type_choice = Type_List_current.get(answer-1);
+                check = Select_Product_Menu(category_choice,type_choice);
+                System.out.println("Returning from Product menu");
+            }
+            else{
+                return false;
+            }
+        } while ((answer < 0) || (answer >= Type_List_current.size()) || (check==false));
+        return true;
+    }
 
-            if (answer.equals ("0")){
-                answer="0";
-                while (answer!="c1" and answer!="c2") or (answer=="0") {
-                    System.out.println("c1. Computer parts");
-                    System.out.println("c2. Peripheral products");
-                    answer = in.nextLine();
-                    if (answer!="c1" and answer!="c2"){
-                        System.out.println("Give a valid category!! Valid categories are : c1, c2");
-                    }   
+    public static boolean Select_Product_Menu(Product_Category category_choice, Product_Type type_choice){
+        int answer;
+        //boolean check = false;
+        List<Product> Product_List = new ArrayList<Product>();
+        Product item;
+        do{
+            System.out.println("Choose Product:");
+            for (int i=0;i<Stock_List.size();i++){
+                item = Stock_List.get(i);
+                if ((item.getProduct_Category().equals(category_choice)) && (item.getProduct_Type().equals(type_choice))){
+                    Product_List.add(item);
+                    System.out.println(item.getIndex() + ": " + item.getName() + " :");
                 }
-                if (answer.equals("c1")){
-                    answer="0";
-                    while (answer!="t1" and answer!="t2" and answer!="t3" and answer!="t4" and answer!="t5") or answer=="0"{
-                    System.out.println("t1.Motherboards");
-                    System.out.println("t2.CPUs");
-                    System.out.println("t3.MemoryRAM");
-                    System.out.println("t4.Hard Discs");
-                    System.out.println("t5.Graphics");
-                    answer = in.nextLine();
-                        if (answer!="t1" and answer!="t2" and answer!="t3" and answer!="t4" and answer!="t5"){
-                            System.out.println("Give a valid type");
-                        }
-                    }
-                    if (answer=="t1"){
-                        answer="0";
-                        while (answer!="B450-A Pro Max" and answer!="B450-F") or answer=="0"{
-                        System.out.println("B450-A Pro Max");
-                        System.out.println("B450-F");
-                        answer = in.nextLine();
-                            if (answer!="B450-A Pro Max" and answer!="B450-F"){
-                                System.out.println("Give a valid name");
-                            }
-                        }
-                        if (answer=="B450-A Pro Max"){
-                            a1.toString(name, year, company, price,"euros", processor_type , memory , gates, stock);
-                            
-                            }
-                        }
-                        else if (answer=="B450-F"){
-                           a10.toString(name, year, company, price,"euros", processor_type , memory , gates);      
-                            
-                        }
-                           
-                    }
-                    else if (answer=="t2"){
-                        answer="0";
-                        while (answer!="i5-11400F" and answer!="Ryzen 5 5600G") or answer=="0"{
-                        System.out.println("i5-11400F");
-                        System.out.println("Ryzen 5 5600G");
-                        answer = in.nextLine();
-                            if (answer!="i5-11400F" and answer!="Ryzen 5 5600G"){
-                                System.out.println("Give a valid name");
-                            }
-                        }
-                        if (answer=="i5-11400F"){
-                            a2.toString(name, year, company, price,"euros", speed , cores ,  integrated_graphics);
-                        }
-                        else if (answer=="Ryzen 5 5600G"){
-                           a11.toString(name, year, company, price,"euros", speed , cores , integrated_graphics);
-                         }
-                    }
-                    else if (answer=="t3"){
-                        answer="0";
-                        while (answer!="Z Neo" and answer!="CCT16G4SFR") or answer=="0"{
-                        System.out.println("Z Neo");
-                        System.out.println("CCT16G4SFR");
-                        answer = in.nextLine();
-                            if (answer!="Z Neo" and answer!="CCT16G4SFR"){
-                                System.out.println("Give a valid name");
-                            }
-                        }
-                        if (answer=="Z Neo"){
-                            a3.toString(name, year, company, price,"euros", type , size , frequency);
-                        }
-                        else if (answer=="CCT16G4SFR"){
-                           a12.toString(name, year, company, price,"euros", type , size , frequency); 
-
-                        }
-                    }
-                    else if (answer=="t4"){
-                        answer="0";
-                        while (answer!="RADEON RX 6600" and answer!="GTX 1650") or answer=="0"{
-                        System.out.println("RADEON RX 6600");
-                        System.out.println("GTX 1650");
-                        answer = in.nextLine();
-                            if (answer!="RADEON RX 6600" and answer!="GTX 1650"){
-                                System.out.println("Give a valid name");
-                            }
-                        }
-                        if (answer=="RADEON RX 6600"){
-                            a4.toString(name, year, company, price,"euros", chipset, memory);
-
-                        }
-                        else if (answer=="GTX 1650"){
-                           a13.toString(name, year, company, price,"euros", chipset, memory);
-                           if (Stock!=0){
-                                
-                            }
-                            else {
-
-                            } 
-                    }
-                    else if (answer=="t5"){
-                        answer="0";
-                        while (answer!="WD Purple" and answer!="970 Evo plus") or answer=="0"{
-                        System.out.println("WD Purple");
-                        System.out.println("970 Evo plus");
-                        answer = in.nextLine();
-                            if (answer!="WD Purple" and answer!="970 Evo plus"){
-                                System.out.println("Give a valid name");
-                            }
-                        }
-                        if (answer=="WD Purple"){
-                            a5.toString(name, year, company, price,"euros", type , size , capacity);
-                        }
-                        else if (answer=="970 Evo plus"){
-                           a14.toString(name, year, company, price,"euros", type , size , capacity);
-
-                        }
-                    if (Stock!=0){
-
-
-
+            }
+            System.out.println("0: Back to previous menu");
+            System.out.println("Total products: " + Product_List.size());
+            int sell_code;
+            int order_code;
+            answer = in.nextInt();
+            if ((answer < 0) || (answer > Product_List.size())){
+                System.out.println("Give a valid product index or 0");
+            }
+            else if (answer != 0){
+                item = Product_List.get(answer-1);
+                System.out.println(item);
+                if (item.getStock()>0){
+                    if (Sell_List.size() == 0){
+                        sell_code = 1;
                     }
                     else {
-                        System.out.println("The product is currently out of stock. Do you want to order it?");
-                        answer = in.nextLine();
-                        if (answer=="Yes"){
-                            Scanner in = new Scanner(System.in);
-                            System.out.print("Enter code: ");
-                            String order_code = in.next();
-                            System.out.println("code: " + order_code);
-                            Scanner in = new Scanner(System.in);
-                            System.out.print("Enter customer_name :");
-                            String order_code = in.next();
-                            System.out.println(": " + order_code);
-
-                        }
+                        sell_code = Sell_List.size()+1;
                     }
 
+                    //System.out.println("\n");
+                    System.out.println("\nEnter Customer Name:");
+                    String customer_name = inString.nextLine();
+                    System.out.println("Enter Customer Phone number:");
+                    String customer_phone_number = inString.nextLine();
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yy");
+                    LocalDate localDate = LocalDate.now();
+                    String sell_date = dtf.format(localDate);
+                    System.out.println("Today's date captured");
+                    Sell sell_item = new Sell(sell_code, item, customer_name, customer_phone_number, sell_date);
+                    Sell_List.addAll(Arrays.asList(sell_item));
+                    System.out.println("Sell added to Sell List");
+                    System.out.println("Sell List size: "+ Sell_List.size());
                 }
+                else{
+                    System.out.println("The product is currently out of stock. Do you want to order it?");
+                    do{
+                        System.out.println("1. yes \n2. no");
+                        answer = in.nextInt();
+                        if ((answer < 1) || (answer > 2)){
+                            System.out.println("Give a valid product choice: 1 or 2");
+                        }
+                    } while ((answer < 1) || (answer > 2));
+                    if (answer == 2){
+                        return true;
+                    }
+                    else{
+                        if (Order_List.size() == 0){
+                            order_code = 1;
+                        }
+                        else{
+                            order_code = Order_List.size()+1;
+                        }
+                        System.out.println("Enter Customer Name:");
+                        String customer_name = inString.nextLine();
+                        System.out.println("Enter Customer Phone number:");
+                        String customer_phone_number = inString.nextLine();
+                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yy");
+                        LocalDate localDate = LocalDate.now();
+                        String order_date = dtf.format(localDate);
+                        String arrival_date;
+                        do{
+                            System.out.println("Enter Order Arrival Date:");
+                            inString = new Scanner (System.in);
+                            arrival_date = inString.nextLine();
+                            if (arrival_date.compareTo(order_date)<0){
+                                System.out.println("Give a valid arrival date same or after " + order_date);
+                            }
+                        }while (arrival_date.compareTo(order_date)<0);
+                        String situation = "Expected";
+                        Order order_item = new Order(order_code, item, customer_name, customer_phone_number, order_date, arrival_date, situation);
+                        Order_List.addAll(Arrays.asList(order_item));
 
-                else if (answer.equals("c2")){
-                    answer="0";
-                    while (answer!="t1" and answer!="t2" and answer!="t3" and answer!="t4") or answer=="0"{
-                        System.out.println("t1.Screens");
-                        System.out.println("t2.Keyboards");
-                        System.out.println("t3.Mouses");
-                        System.out.println("t4.Printers");
-                        answer = in.nextLine();
-                        if (answer!="t1" and answer!="t2" and answer!="t3" and answer!="t4" and answer!="t5"){
-                            System.out.println("Give a valid type");
-                        }
                     }
-                    if (answer=="t1"){
-                        answer="0";
-                        while (answer!="DELL ADAMO XPS 13 4" and answer!="Huawei") or answer=="0"{
-                        System.out.println("DELL ADAMO XPS 13 4");
-                        System.out.println("Huawei");
-                        answer = in.nextLine();
-                            if (answer!="DELL ADAMO XPS 13 4" and answer!="Huawei"){
-                                System.out.println("Give a valid name");
-                            }
-                        }
-                        if (answer=="DELL ADAMO XPS 13 4"){
-                            a6.toString(name, year, company, price,"euros", genre, dimensions, resolution, gates);
-                            
-                        }
-                        else if (answer=="Huawei"){
-                           a15.toString(name, year, company, price,"euros", genre, dimensions, resolution, gates);
-                           
-                        }
-                           
-                    }
-                    else if (answer=="t2"){
-                        answer="0";
-                        while (answer!="MK295" and answer!="Razer Vipor mini RGB") or answer=="0"{
-                        System.out.println("MK295");
-                        System.out.println("Razer Vipor mini RGB");
-                        answer = in.nextLine();
-                            if (answer!="MK295" and answer!=" Razer Vipor mini RGB"){
-                                System.out.println("Give a valid name");
-                            }
-                        }
-                        if (answer=="MK295"){
-                            a7.toString(name, year, company, price,"euros", connection);
-                            
-                        }
-                        else if (answer=="Razer Vipor mini RGB"){
-                           a16.toString(name, year, company, price,"euros", connection);
-                           
-                        }
-                    }
-                    else if (answer=="t3"){
-                        answer="0";
-                        while (answer!="Xiaomi Mi Dual Mode" and answer!="CCT16G4SFR") or answer=="0"{
-                        System.out.println("Xiaomi Mi Dual Mode");
-                        System.out.println("CCT16G4SFR");
-                        answer = in.nextLine();
-                            if (answer!="Xiaomi Mi Dual Mode" and answer!="CCT16G4SFR"){
-                                System.out.println("Give a valid name");
-                            }
-                        }
-                        if (answer=="Xiaomi Mi Dual Mode"){
-                            a8.toString(name, year, company, price,"euros", technology, connection);
-                           
-                        }
-                        else if (answer=="CCT16G4SFR"){
-                           a17.toString(name, year, company, price,"euros", technology, connection);
-                           
-                        }
-                    }
-                    
-                    else if (answer=="t4"){
-                        answer="0";
-                        while (answer!="HP DeskJet 2721e" and answer!="Xerox B230V/DNI") or answer=="0"{
-                        System.out.println("HP DeskJet 2721e");
-                        System.out.println("Xerox B230V/DNI");
-                        answer = in.nextLine();
-                            if (answer!="HP DeskJet 2721e" and answer!="Xerox B230V/DNI"){
-                                System.out.println("Give a valid name");
-                            }
-                        }
-                        if (answer=="HP DeskJet 2721e"){
-                            a9.toString(name, year, company, price,"euros", technology, type);
-                            if (Stock!=0){
-                                
-                            }
-                            else {
-
-                            }
-                        }
-                        else if (answer=="Xerox B230V/DNI"){
-                           a18.toString(name, year, company, price,"euros", technology, type);
-                
-                         }
-
                 }
+                System.out.println("Done with this product");
+            }
+            else{
 
-                }
+                return false;
+            }
+        }while((answer < 0) || (answer > Product_List.size()));
+        System.out.println("Returning To Product_Type Menu");
+        return true;
+    }
 
-            }
-            else if (answer.equals ("1")){
-                
-            }
-            else if (answer.equals ("2")){
-
-            }
-            else if(answer.equals ("3")){
-                done=true;
-            }
+    public static boolean Print_Orders(){
+        Scanner in = new Scanner (System.in);
+        Order order_item;
+        int order_code;
+        int answer;
+        System.out.println("\nOrder List:");
+        for (int i=0;i<Order_List.size();i++){
+            order_item = Order_List.get(i);
+            System.out.println(order_item);
         }
+        boolean found = false;
+        do{
+            System.out.println("Please choose an order code: 1 - " + Order_List.size() + " or 0 to go to the main menu:");
+            order_code = in.nextInt();
+            if (order_code == 0){
+                return false;
+            }
+            for (int i=0;i<Order_List.size();i++){
+                order_item = Order_List.get(i);
+                if (order_item.getOrder_code() == order_code){
+                    found=true;
+                    order_code = order_item.getOrder_code();
+                    System.out.println("Do you want to set the order as arrived and sold?");
+                    do{
+                        System.out.println("1. yes \n2. no");
+                        answer = in.nextInt();
+                        if ((answer < 1) || (answer > 2)){
+                            System.out.println("Give a valid choice: 1 or 2");
+                        }
+                    } while ((answer < 1) || (answer > 2));
+                    if (answer == 1){
+                        System.out.println(order_item);
+                        order_item.setSituation("Executed");
+                        int sell_code;
+                        if (Sell_List.size() == 0){
+                            sell_code = 1;
+                        }
+                        else {
+                            sell_code = Sell_List.size()+1;
+                        }
+                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yy");
+                        LocalDate localDate = LocalDate.now();
+                        String sell_date = dtf.format(localDate); 
+                        Sell sell_item = new Sell(sell_code, order_item.getProduct(), order_item.getCustomer_name(), 
+                        order_item.getCustomer_phone_number(), sell_date);
+                        Sell_List.addAll(Arrays.asList(sell_item));
+                    }
+                }
+            }
+            if ((order_code != 0) && (found == false)){
+                System.out.println("Give a valid order code: 1 - " + Order_List.size() + "or 0");
+            }
+        }while ((order_code != 0) && (found == false));
+
+        return true;
+    }
+
+    public static void Print_Sales(){
+        Scanner in = new Scanner (System.in);
+        System.out.println("\nSell List:");
+        Sell sell_item ;
+        for (int i=0;i<Sell_List.size();i++){
+            sell_item = Sell_List.get(i);
+            System.out.println(sell_item);
+        }
+        return;
+    }
+
+    public static void main(String[] args) {
+        Create_Shop();  
+        boolean done = false;
+        while (!done){
+            done = MainMenu();
+            System.out.println("returned with " + done);
+            if (!done) System.out.println("Back at it");
+        }
+
     }
 }
 

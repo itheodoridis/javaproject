@@ -22,7 +22,7 @@ public class Graphics extends Product{
     
     public String toString(){
         String message = super.toString();
-        message += "\nCharacteristics: Chipset:"+ getChipset() + "Memory:" + getMemory();
+        message += "\nCharacteristics: Chipset:"+ getChipset() + "\nMemory:" + getMemory();
         return message;
     }
 }

@@ -27,8 +27,8 @@ public class MemoryRAM extends Product {
     }
     public String toString(){
         String message = super.toString();
-        message += "\nCharacteristics: Type: " + getType() + " Frequency:" + getFrequency()
-        +  " Size: " + getSize();
+        message += "\nCharacteristics: Type: " + getType() + "\nFrequency:" + getFrequency()
+        +  "\nSize: " + getSize();
         return message;
     }
 }

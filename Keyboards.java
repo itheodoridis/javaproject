@@ -15,7 +15,7 @@ public class Keyboards extends Product {
     
     public String toString(){
         String message = super.toString();
-        message += "\nProduct information:"+"Connection:"+ getConnection();
+        message += "\nConnection:"+ getConnection();
         return message;
     }
 }

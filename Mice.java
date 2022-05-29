@@ -24,7 +24,7 @@ public class Mice extends Product {
     
     public String toString(){
         String message = super.toString();
-        message += "\nProduct information: Technology: " + getTechnology() + " Connection: " + getConnection();
+        message += "\nProduct information: \nTechnology: " + getTechnology() + " \nConnection: " + getConnection();
         return message;
     }
 }

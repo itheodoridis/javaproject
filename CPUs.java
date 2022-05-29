@@ -27,8 +27,8 @@ public class CPUs extends Product{
 
     public String toString(){
         String message = super.toString();
-        message += "\nCharacteristics: Speed:" + getSpeed() + "Integrated Graphics:" + getIntegrated_graphics()
-        +  "Number of Cores:" + getCores();
+        message += "\nCharacteristics: Speed:" + getSpeed() + "\nIntegrated Graphics: " + getIntegrated_graphics()
+        +  "\nNumber of Cores: " + getCores();
         return message;
     }
 }

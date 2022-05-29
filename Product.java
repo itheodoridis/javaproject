@@ -75,14 +75,14 @@ public class Product {
 
     public String toString(){
         String message;
-        message = "Index: "+ getIndex();
+        message = "\nIndex: "+ getIndex();
         message += "\nName: "+ getName();
         message += "\nCategory: " + getProduct_Category().getName();
         message += "\nType: " + getProduct_Type().getName();
         message += "\nYear: " + getYear();
         message += "\nCompany: " + getCompany();
         message += "\nPrice: " + getPrice();
-        message += "\nStock: " + getStock();
+        message += "\nStock: " + getStock() + "\n";
         return message;
     }// end method toString
     
