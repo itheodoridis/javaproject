@@ -4,9 +4,8 @@ public class MemoryRAM extends Product {
     private int Frequency;
 
     public MemoryRAM (int index, String name , int year , String company ,
-    float price , String type , int size, int frequency, int stock, 
-    Product_Category product_category, Product_Type product_type){
-        super(index, name, year, company, price, stock, product_category, product_type);
+    float price , String type , int size, int frequency, int stock, Product_Type product_type){
+        super(index, name, year, company, price, stock, product_type);
         Type = type;
         Size = size;
         Frequency = frequency;

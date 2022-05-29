@@ -3,9 +3,8 @@ public class Graphics extends Product{
     private int Memory;
 
     public Graphics(int index, String name , int year , String company ,
-    float price,String chipset , int memory, int stock, 
-    Product_Category product_category, Product_Type product_type){
-        super(index,name, year, company, price, stock, product_category, product_type);
+    float price,String chipset , int memory, int stock, Product_Type product_type){
+        super(index,name, year, company, price, stock, product_type);
         Chipset = chipset;
         Memory = memory;
         Stock = stock; 

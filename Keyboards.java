@@ -2,9 +2,8 @@ public class Keyboards extends Product {
     private String Connection;
 
     public Keyboards (int index, String name , int year , String company ,
-    float price,String connection, int stock, 
-    Product_Category product_category, Product_Type product_type){
-        super(index, name, year, company, price, stock, product_category, product_type);
+    float price,String connection, int stock, Product_Type product_type){
+        super(index, name, year, company, price, stock, product_type);
         Connection = connection;
     } 
     public void setConnection(String connection){

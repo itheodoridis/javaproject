@@ -59,10 +59,6 @@ public class Order {
     public void setSituation( String situation ) {
         Situation = situation; }            
     public String getSituation() {
-        return Situation; }
-    
-
-    
-        
+        return Situation;
     }
 }

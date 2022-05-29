@@ -1,10 +1,29 @@
 import java.util.Scanner;
 import java.util.jar.Attributes.Name;
 public class MainApp {
+    boolean Done;
+
+    public int MainMenu(){
+        Scanner in = new Scanner (System.in);
+        int answer=7;
+        while (((answer <= 0) && (answer>=3)) || answer==7){
+            System.out.println("0. Overview of products");
+            System.out.println("1. Overview of orders");
+            System.out.println("2. Overview of sales");
+            System.out.println("3. Exit");
+            answer = in.nextInt();
+            if ((answer <= 0) && (answer>=3){
+                System.out.println("Give a valid number!! Valid numbers are : 0, 1, 2, 3");
+            })
+        }
+    }
     public static void main(String[] args) {
         boolean done=false;
-        Scanner in = new Scanner (System.in);
-        String answer;
+        
+        int answer;
+
+        
+
         Motherboards a1 = new Motherboards("B450-A Pro Max", 2018, "MSI", 80f, "AMD", 32, 6 ,28);
         Motherboards a10 = new Motherboards("B450-F", 2020, "Asus", 130f, "Intel", 64, 6, 36 );
         CPUs a2 = new CPUs("i5-11400F", 2019, "intel CORE", 150f, 2.6f , 6, true,12 );
@@ -23,16 +42,17 @@ public class MainApp {
         Mouses a17 = new Mouses("Razer Vipor mini RGB", 2019, "Razer", 30f, "laser", "wired",31);
         Printers a9 = new Printers("HP DeskJet 2721e", 2022, "HP", 60f, "laser", "colour",26);
         Printers a18 = new Printers("Xerox B230V/DNI", 2022, "Xerox", 100f, "laser", "black&white",0);
-    
-        while (!done) {
-            answer="7";
-            while (answer!="1") and (answer!="2") and (answer!="3") and (answer!="0") or (answer=="7"){
+        
+        Done = false;
+        while (Done == false) {
+            answer=7;
+            while (answer < 0) and (answer!="2") and (answer!="3") and (answer!="0") or (answer=="7"){
                 System.out.println("0. Overview of products");
                 System.out.println("1. Overview of orders");
                 System.out.println("2. Overview of sales");
                 System.out.println("3. Exit");
-                answer = in.nextLine();    
-                if (answer!="1" and answer!="2" and answer!="3" and answer!="0"){
+                answer = in.nextInt();
+                if (answer!="1") && (answer!="2") && (answer!="3") && (answer!="0"){
                     System.out.println("Give a valid number!! Valid numbers are : 0, 1, 2, 3");
                 }
             }
@@ -175,6 +195,7 @@ public class MainApp {
                             System.out.println(": " + order_code);
 
                         }
+                    }
 
                 }
 

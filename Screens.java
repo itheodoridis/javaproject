@@ -6,9 +6,8 @@ public class Screens extends Product {
 
   //four-argument constructor
     public Screens (int index, String name , int year , String company ,
-    float price,String genre, String dimensions, float resolution, String gates, int stock, 
-    Product_Category product_category, Product_Type product_type){
-        super(index, name, year, company, price, stock, product_category, product_type);
+    float price,String genre, String dimensions, float resolution, String gates, int stock, Product_Type product_type){
+        super(index, name, year, company, price, stock, product_type);
         Genre = genre;
         Dimensions = dimensions;
         Resolution = resolution;

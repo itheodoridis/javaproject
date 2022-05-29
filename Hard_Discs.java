@@ -4,9 +4,8 @@ public class Hard_Discs extends Product{
     private int Capacity;
 
     public Hard_Discs(int index, String name , int year , String company ,
-    float price,String type , float size , int capacity, int stock, 
-    Product_Category product_category, Product_Type product_type){
-        super(index, name, year, company, price, stock, product_category, product_type);
+    float price,String type , float size , int capacity, int stock, Product_Type product_type){
+        super(index, name, year, company, price, stock, product_type);
         setType(type);
         setSize(size);
         setCapacity(capacity);

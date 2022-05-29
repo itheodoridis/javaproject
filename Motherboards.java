@@ -4,9 +4,8 @@ public class Motherboards extends Product{
     private int Gates;
     
     public Motherboards(int index, String name , int year , String company ,
-    float price, String processor_type , int memory , int gates, int stock, 
-    Product_Category product_category, Product_Type product_type){
-        super(index,name,year,company,price,stock,product_category,product_type);
+    float price, String processor_type , int memory , int gates, int stock, Product_Type product_type){
+        super(index,name,year,company,price,stock,product_type);
         Processor_type = processor_type;
         Memory = memory;
         Gates = gates;

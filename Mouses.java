@@ -3,9 +3,8 @@ public class Mouses extends Product {
     private String Connection;
    
     public Mouses(int index, String name , int year , String company ,
-    float price,String technology, String connection, int stock, 
-    Product_Category product_category, Product_Type product_type){
-        super(index, name, year, company, price, stock, product_category, product_type);
+    float price,String technology, String connection, int stock, Product_Type product_type){
+        super(index, name, year, company, price, stock, product_type);
         Technology = technology;
         Connection = connection;
     } 
